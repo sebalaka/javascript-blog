@@ -71,7 +71,7 @@ function generateTitleLinks() {
     console.log(linkHTML);
     /* create HTML of the link */
     // titleList.innerHTML = titleList.innerHTML + linkHTML;
-    titleList.insertAdjacentHTML("afterbegin", linkHTML);
+    titleList.insertAdjacentHTML('afterbegin', linkHTML);
     /* insert link into titleList */
 
     html = html + linkHTML;
