@@ -338,12 +338,14 @@ function generateAuthors() {
     /* END LOOP: for each tag */
     /* insert HTML of all the links into the tags wrapper */
     // authorWrapper.innerHTML = html;
-    authorWrapper.insertAdjacentHTML('afterend', linkHTML);
-    if (!allAuthors[author]) {
-      allAuthors[author] = 1;
+
+    if (!allAuthors[authorTags]) {
+      allAuthors[authorTags] = 1;
     } else {
-      allAuthors[author]++;
+      allAuthors[authorTags]++;
     }
+
+    authorWrapper.insertAdjacentHTML('beforeend', linkHTML);
     const authorList = document.querySelector('.authors');
     const authorsParams = calculateAuthorsParams(allAuthors);
     // let allAuthorsHTML = '';
@@ -353,9 +355,9 @@ function generateAuthors() {
 
     for (let author in allAuthors) {
       // const authorLinkHTML = '<li><a href="#tag-' + author + '">' + author + ' ' + '(' + calculateAuthorClass(allAuthors[author], authorsParams) + ')' + '</a></li>' + ' '; 
-      const authorLinkHTML = '<li><a class="' + calculateAuthorClass(allAuthors[author], authorsParams) + '" href="#author-' + author + '">' + author + ' (' + allAuthors[author] + ')</a></li>';
+      // const authorLinkHTML = '<li><a class="tag-size-' + calculateTagClass(allAuthors[author], authorsParams) + ' " href ="#author-' + author + '">' + author + '</a></li> ';
       // const authorLinkHTML = '<li><a href="#author-' + author + '">' + author + ' (' + allAuthors[author] + ') </a></li>'
-      console.log(authorLinkHTML);
+      // console.log(authorLinkHTML);
       allAuthorsData.authors.push({
         author: author,
         count: allAuthors[author],
@@ -378,8 +380,7 @@ function addClickListenersToAuthors(event) {
   const clickedElement = this;
   const href = clickedElement.getAttribute('href');
   console.log(href);
-  const tag = href.replace('#author-', '');
-  console.log(tag);
+  const author = href.replace('#author-', '');
   const activeLinks = document.querySelectorAll('a.active[href^="#author-"]');
 
   for (let activeLink of activeLinks) {
@@ -392,7 +393,7 @@ function addClickListenersToAuthors(event) {
     correctTag.classList.add('active');
   }
 
-  generateTitleLinks('[data-author~="' + tag + '"]');
+  generateTitleLinks('[data-author="' + author + '"]');
 }
 
 function authorClickHandler() {
@@ -405,5 +406,4 @@ function authorClickHandler() {
     /* END LOOP: for each link */
   }
 }
-
 authorClickHandler();
